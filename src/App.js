@@ -1,52 +1,9 @@
-import { useState, useEffect, useCallback } from 'react';
+import useProfile from './hooks/useProfile';
+import useFollowers from './hooks/useFollowers';
 
 const App = () => {
-  const [profile, setProfile] = useState(null);
-  const [followers, setFollowers] = useState([]);
-
-  const normalizeUserProfile = useCallback((profile) => {
-    const { name, avatar_url: avatarUrl } = profile;
-    const userProfile = { name, avatarUrl };
-
-    return userProfile;
-  }, []);
-
-  const saveUserProfile = useCallback((profile) => {
-    const normalizedUserProfile = normalizeUserProfile(profile);
-
-    setProfile(normalizedUserProfile);
-  }, [normalizeUserProfile]);
-
-  const fetchUserProfile = useCallback(async () => {
-    const request = await fetch('https://api.github.com/users/leonardorpr')
-    const data = await request.json();
-
-    saveUserProfile(data);
-  }, [saveUserProfile]);
-
-  const normalizeUserFollowers = useCallback((followers) => {
-    const mappedUserFollowers = followers.map(({ login: username, avatar_url: avatarUrl }) => ({ username, avatarUrl }));
-
-    return mappedUserFollowers;
-  }, []);
-
-  const saveUserFollowers = useCallback((followers) => {
-    const normalizedUserFollowers = normalizeUserFollowers(followers);
-
-    setFollowers(normalizedUserFollowers);
-  }, [normalizeUserFollowers]);
-
-  const fetchUserFollowers = useCallback(async () => {
-    const request = await fetch('https://api.github.com/users/leonardorpr/followers?page=1&per_page=5')
-    const data = await request.json();
-
-    saveUserFollowers(data);
-  }, [saveUserFollowers]);
-
-  useEffect(() => {
-    fetchUserProfile();
-    fetchUserFollowers();
-  }, [fetchUserProfile, fetchUserFollowers]);
+  const { profile } = useProfile();
+  const { followers } = useFollowers();
 
   return (
     <main>
