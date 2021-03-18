@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback } from "react";
 
 const useProfile = () => {
   const [profile, setProfile] = useState(null);
@@ -10,14 +10,17 @@ const useProfile = () => {
     return userProfile;
   }, []);
 
-  const saveUserProfile = useCallback((profile) => {
-    const normalizedUserProfile = normalizeUserProfile(profile);
+  const saveUserProfile = useCallback(
+    (profile) => {
+      const normalizedUserProfile = normalizeUserProfile(profile);
 
-    setProfile(normalizedUserProfile);
-  }, [normalizeUserProfile]);
+      setProfile(normalizedUserProfile);
+    },
+    [normalizeUserProfile]
+  );
 
   const fetchUserProfile = useCallback(async () => {
-    const request = await fetch('https://api.github.com/users/leonardorpr')
+    const request = await fetch("https://api.github.com/users/leonardorpr");
     const data = await request.json();
 
     saveUserProfile(data);
@@ -28,6 +31,6 @@ const useProfile = () => {
   }, [fetchUserProfile]);
 
   return { profile };
-}
+};
 
 export default useProfile;

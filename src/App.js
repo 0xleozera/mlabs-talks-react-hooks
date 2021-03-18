@@ -1,5 +1,5 @@
-import useProfile from './hooks/useProfile';
-import useFollowers from './hooks/useFollowers';
+import useProfile from "./hooks/useProfile";
+import useFollowers from "./hooks/useFollowers";
 
 const App = () => {
   const { profile } = useProfile();
@@ -26,6 +26,6 @@ const App = () => {
       </section>
     </main>
   );
-}
+};
 
 export default App;
